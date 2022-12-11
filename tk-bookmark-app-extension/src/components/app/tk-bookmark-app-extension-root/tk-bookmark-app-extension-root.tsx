@@ -14,6 +14,8 @@ export class TkBookmarkAppExtensionRoot {
 
   pageUrl: string;
   pageTitle: string;
+
+  @State() userEmail: string;
   
   @State() bookmark;
 
@@ -28,6 +30,7 @@ export class TkBookmarkAppExtensionRoot {
   }
 
   async componentWillLoad() {
+    await this.getUserEmail();
     this.getLabelData();
     this.getPageData();
   }
@@ -37,7 +40,30 @@ export class TkBookmarkAppExtensionRoot {
   }
 
   getDataUrl() {
+    if(this.userEmail) {
+      return `${state.bookmarkApi}/label/user/${this.userEmail}`;
+    }
     return `${state.bookmarkApi}/label/user/guest`;
+  }
+
+  getUserEmail() {
+    return new Promise((resolve) => {
+      try {
+        if(chrome.identity) {
+          chrome.identity.getProfileUserInfo({accountStatus: chrome.identity.AccountStatus.ANY}, info => {
+            console.log(`got user info ${JSON.stringify(info)}`);
+            this.userEmail = info.email;
+            state.user.email = info.email;
+            resolve(info.email);
+          });
+        }
+      }
+      catch(error) {
+        console.error(error);
+        this.userEmail = '';
+        resolve('');
+      }
+    });
   }
 
   async getLabelData() {
@@ -61,12 +87,19 @@ export class TkBookmarkAppExtensionRoot {
             title: tabs[0].title,
             url: tabs[0].url,
             notes: '',
-            user: ''
+            user: this.userEmail
           };
           this.loadedPageData = true;
         }
       });
     }
+  }
+
+  renderUserEmail() {
+    if(this.userEmail) {
+      return this.userEmail;
+    }
+    return 'guest'
   }
 
   render() {
@@ -78,7 +111,10 @@ export class TkBookmarkAppExtensionRoot {
 
     return (
       <div>
-        <sl-button href={state.baseUrl} target="_blank">Open bookmark app</sl-button>
+        <div>
+          <sl-button href={state.baseUrl} target="_blank">Open bookmark app</sl-button>
+          <span style={{padding: '5px'}}>using {this.renderUserEmail()}</span>
+        </div>
         <tk-add-or-edit-bookmark hideNextButton={true} forNewBookmark={true} existingTags={this.existingTags}
           bookmark={this.bookmark} overrideState={state}></tk-add-or-edit-bookmark>
       </div>
