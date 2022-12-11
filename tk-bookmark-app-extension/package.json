@@ -27,9 +27,12 @@
   },
   "dependencies": {
     "@shoelace-style/shoelace": "^2.0.0-beta.85",
-    "@stencil/core": "^2.13.0"
+    "@stencil/core": "^2.13.0",
+    "tk-bookmark-components": "^0.4.9"
   },
   "devDependencies": {
+    "@stencil/store": "^2.0.1",
+    "@types/chrome": "^0.0.203",
     "@types/jest": "^27.0.3",
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",

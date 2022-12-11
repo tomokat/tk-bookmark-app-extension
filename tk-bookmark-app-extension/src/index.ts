@@ -1,3 +1,3 @@
 export * from './components';
 
-import 'tk-bookmark-components';
+// import 'tk-bookmark-components';

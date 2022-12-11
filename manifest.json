@@ -5,5 +5,21 @@
   "action": {
     "default_popup": "popup.html",
     "default_icon": "pet-commands-stay.png"
-  }
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["content.js"]
+  }],
+  "host_permissions": [
+    "http://*/*"
+  ],
+  "permissions": [
+    "declarativeNetRequestWithHostAccess",
+    "identity",
+    "identity.email",
+    "cookies",
+    "storage",
+    "activeTab",
+    "tabs"
+  ]
 }

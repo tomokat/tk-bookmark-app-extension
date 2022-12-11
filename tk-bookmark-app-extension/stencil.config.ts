@@ -25,6 +25,9 @@ export const config: Config = {
           //src: '../node_modules/tk-bookmark-components/www/shoelace',
           dest: 'shoelace'
         },
+        { src: '../node_modules/tk-bookmark-components/',
+          dest: 'tk-bookmark-components'
+        },
       ]
     },
   ],
