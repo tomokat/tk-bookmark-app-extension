@@ -112,7 +112,7 @@ export class TkBookmarkAppExtensionRoot {
     return (
       <div>
         <div>
-          {/* <sl-button href={state.baseUrl} target="_blank">Open bookmark app</sl-button> */}
+          <sl-button href={state.baseUrl} target="_blank">Open bookmark app</sl-button>
           <span style={{padding: '5px'}}>using {this.renderUserEmail()}</span>
         </div>
         <tk-add-or-edit-bookmark hideNextButton={true} forNewBookmark={true} existingTags={this.existingTags}
